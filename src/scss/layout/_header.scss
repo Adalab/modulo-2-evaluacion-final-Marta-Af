@@ -1,0 +1,50 @@
+.container {
+  background-color: aqua;
+  width: 80vw;
+  height: 15vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.page__header {
+  height: 10vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+input {
+  width: 30rem;
+  height: 2rem;
+}
+.btn {
+  width: 5rem;
+  height: 2.3rem;
+}
+.list {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 3fr 3fr 3fr 3fr;
+  place-items: center;
+  gap: 1rem;
+}
+.container_fav {
+  width: 20vw;
+}
+.container_all {
+  width: 80vw;
+}
+.favourite {
+  display: grid;
+  grid-template-columns: 2fr;
+
+  width: 20vw;
+}
+
+.hidden {
+  display: none;
+}
