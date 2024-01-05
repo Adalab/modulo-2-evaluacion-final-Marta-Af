@@ -21,7 +21,7 @@ input {
   width: 5rem;
   height: 2.3rem;
 }
-.list {
+.list_all {
   display: grid;
   grid-template-columns: 2fr 2fr;
 }
@@ -31,6 +31,14 @@ input {
   grid-template-columns: 3fr 3fr 3fr 3fr;
   place-items: center;
   gap: 1rem;
+  .chrome {
+    background-color: beige;
+    height: 70vh;
+    width: 20vw;
+  }
+  .favourite {
+    background-color: red;
+  }
 }
 .container_fav {
   width: 20vw;
@@ -38,13 +46,20 @@ input {
 .container_all {
   width: 80vw;
 }
-.favourite {
+.ul-favourite {
   display: grid;
   grid-template-columns: 2fr;
-
   width: 20vw;
 }
 
 .hidden {
   display: none;
+}
+
+.photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10rem;
+  width: 12rem;
 }
