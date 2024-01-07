@@ -1,10 +1,12 @@
 "use strict";
 // QUERYSELECTOR
 const btnSearch = document.querySelector(".js_btn");
+const form = document.querySelector('.js_form');
 const listCard = document.querySelector(".js_listCard");
 const sectionFavourite = document.querySelector(".js_sectionFavourite");
 const chromesFavourites = document.querySelector(".js_chromesFavourites");
 const liFavourites = document.querySelector(".js_liFavourites");
+
 
 // VARIABLES DE DATOS
 let chartersList = []; //array inicial
@@ -20,7 +22,7 @@ function handleClickChromes(event) {
   
     const selectedId = favChrome.dataset.id; // Obtener el id del cromo seleccionado
   console.log(selectedId);
-    const selectFav = chartersList.find((charters) => charters._id == selectedId); // Buscar el cromo en la lista de datos
+    const selectFav = chartersList.find((charters) => charters._id === parseInt(selectedId)); // Buscar el cromo en la lista de datos
   console.log(selectFav);
     const favouriteIndex = favouriteData.findIndex((charters) => charters._id === selectedId);
   
@@ -40,10 +42,21 @@ function handleClickChromes(event) {
 
 // EVENTOS
 // Evento click en buscar
-// btnSearch.addEventListener('click', (event) => {
-//     event.preventDefault();
-//     console.log("Clic");
-// });
+btnSearch.addEventListener('click', (event) => {
+    event.preventDefault();
+    // traer el value del form
+    const formValue = form.querySelector('input').value;
+    fetch(`//api.disneyapi.dev/character?name=${formValue}`)
+    .then((response) => response.json())
+    .then(data => {
+        chartersList = data.data;
+        listCard.innerHTML = "";
+        renderAll(); // Renderizar después de obtener los datos de la API
+        console.log(chartersList);
+    });
+
+    // al click en el boton, ir a la api
+});
 
 // CÓDIGO CUANDO INICIA LA PÁGINA
 //Funcion pintar un cromo
@@ -84,7 +97,7 @@ function renderFavourites() {
 
 
 // Pintar los cromos
-fetch("//api.disneyapi.dev/character")
+fetch('//api.disneyapi.dev/character')
   .then((response) => response.json())
   .then((data) => {
     chartersList = data.data;
