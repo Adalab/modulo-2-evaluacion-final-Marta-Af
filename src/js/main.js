@@ -7,8 +7,8 @@ const chromesFavourites = document.querySelector(".js_chromesFavourites");
 const liFavourites = document.querySelector(".js_liFavourites");
 
 // VARIABLES DE DATOS
-let chartersList = [];
-let favourite
+let chartersList = []; //array inicial
+let favouriteData = []; //array de favoritos
 
 // FUNCIONES
 
@@ -16,33 +16,37 @@ let favourite
 
 // Evento de clic en un cromo
 function handleClickChromes(event) {
-  const favChrome = event.currentTarget;
-  favChrome.classList.toggle("favourite");
-
-  // Obtener el id del cromo seleccionado
-  const selectedId = favChrome.dataset.id;
-
-  // Buscar el cromo en la lista de datos
-  const selectFav = chartersList.find((charters) => charters._id == selectedId);
-  //Pintar cromo seleccionado en favoritos
-  chromesFavourites.innerHTML += `<li class="chrome js_oneChrome" data-id="${selectFav._id}">
-    <img class="photo" src="${selectFav.imageUrl}" alt="" />
-    <h3>${selectFav.name}</h3>
-</li>
-`;
-
-  // Hacer algo con el cromo seleccionado (en este caso, imprimir en la consola)
+    const favChrome = event.currentTarget;
+  
+    const selectedId = favChrome.dataset.id; // Obtener el id del cromo seleccionado
+  console.log(selectedId);
+    const selectFav = chartersList.find((charters) => charters._id == selectedId); // Buscar el cromo en la lista de datos
   console.log(selectFav);
-}
+    const favouriteIndex = favouriteData.findIndex((charters) => charters._id === selectedId);
+  
+    if (favouriteIndex === -1) {
+      favouriteData.push(selectFav);
+
+    } else {
+      favouriteData.splice(favouriteIndex, 1);
+    }
+  
+    renderFavourites();
+    favChrome.classList.toggle("favourite");
+    // Hacer algo con el cromo seleccionado (en este caso, imprimir en la consola)
+    console.log(selectFav); // cromo seleccionado como favorito
+    console.log(favouriteIndex);
+  }
 
 // EVENTOS
+// Evento click en buscar
 // btnSearch.addEventListener('click', (event) => {
 //     event.preventDefault();
 //     console.log("Clic");
 // });
 
 // CÓDIGO CUANDO INICIA LA PÁGINA
-//Funcion pintar uno
+//Funcion pintar un cromo
 function renderOne(charters) {
   listCard.innerHTML += `
         <li class="chrome js_oneChrome" data-id="${charters._id}">
@@ -62,6 +66,23 @@ function renderAll() {
     chrome.addEventListener("click", handleClickChromes);
   }
 }
+//Pintar un favorito
+function renderOneFavourite(favouriteData) {
+    liFavourites.innerHTML += `<li class="chrome js_oneChrome">
+    <img class="photo" src="${favouriteData.imageUrl}" alt="" />
+    <h3>${favouriteData.name}</h3>
+</li>`;
+}
+
+//Funcion pintar favoritos
+function renderFavourites() {
+    liFavourites.innerHTML ='';
+    for (let i = 0; i < favouriteData.length; i++) {
+        renderOneFavourite(favouriteData[i])
+      }
+}
+
+
 // Pintar los cromos
 fetch("//api.disneyapi.dev/character")
   .then((response) => response.json())
