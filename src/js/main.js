@@ -26,7 +26,7 @@ function handleClickChromes(event) {
   ); // Buscar el cromo en la lista de datos
 
   const favouriteIndex = favouriteData.findIndex(
-    (charters) => charters._id === selectedId
+    (charters) => charters._id === parseInt(selectedId)
   );
 
   if (favouriteIndex === -1) {
@@ -41,10 +41,8 @@ function handleClickChromes(event) {
 
   // Opcionalmente se ha eliminado la clase hidden para que aparezca la seccion de favoritos al hacer click en un cromo
   sectionFavourite.classList.remove("hidden");
-  console.log(selectFav); // cromo seleccionado como favorito
-  console.log(favouriteIndex);
+  
 }
-
 // EVENTOS
 // Evento click en buscar
 btnSearch.addEventListener("click", (event) => {
@@ -61,18 +59,26 @@ btnSearch.addEventListener("click", (event) => {
     });
 });
 
-
-
 // CÓDIGO CUANDO INICIA LA PÁGINA
 //Funcion pintar un cromo
 function renderOne(charters) {
-  listCard.innerHTML += `
+    if (charters.imageUrl === undefined) {
+      listCard.innerHTML += `
         <li class="chrome js_oneChrome" data-id="${charters._id}">
-            <img class="photo" src="${charters.imageUrl}" alt="" />
-            <h3>${charters.name}</h3>
+          <img class="photo" src="https://via.placeholder.com/210x295/ffffff/555555/?text=Disney" alt="" />
+          <h3>${charters.name}</h3>
         </li>
-    `;
-}
+      `;
+    } else {
+      listCard.innerHTML += `
+        <li class="chrome js_oneChrome" data-id="${charters._id}">
+          <img class="photo" src="${charters.imageUrl}" alt="" />
+          <h3>${charters.name}</h3>
+        </li>
+      `;
+    }
+  }
+
 //Funcion pintar todos los cromos
 function renderAll() {
   for (let i = 0; i < chartersList.length; i++) {
@@ -86,23 +92,40 @@ function renderAll() {
 }
 //Pintar un favorito
 function renderOneFavourite(favouriteData) {
-  liFavourites.innerHTML += `<li class="chrome js_oneChrome">
-
-    <img class="photo" src="${favouriteData.imageUrl}" alt="" />
+    liFavourites.innerHTML += `<li class="chrome js_oneChrome" data-id="${favouriteData._id}">
     <button class="btnStar js_btnReset">&times;</button>
-    <h3>${favouriteData.name}</h3>
-</li>`;
+      <img class="photo" src="${favouriteData.imageUrl}" alt="" />
+      
+      <h3>${favouriteData.name}</h3>
+    </li>`;
+  
+    const btnReset = document.querySelector('.js_btnReset');
+    console.log(btnReset);
+ 
+    // Eliminar favorito
+    btnReset.addEventListener('click', (event) => {
+      const clickResetLi = favouriteData._id;
+      console.log(clickResetLi);
+  
+      const clickResetFavouriteIndex = favouriteData.findIndex(
+        (charter) => charter._id === parseInt(clickResetLi)
+        
+      );
+      console.log(clickResetFavouriteIndex);
+      
+  
+      // verifica si esta o no
+      if (clickResetFavouriteIndex !== -1) {
+        favouriteData.splice(clickResetFavouriteIndex, 1);
+  
+        // Vuelve a pintar los favoritos
+        renderFavourites();
+      }
+    });
+  }
+  
+  
 
-const btnReset = document.querySelector('.js_btnReset');
-console.log(btnReset);
-btnReset.addEventListener('click', (event) => {
-    // const liToReset = event.currentTarget
-    // liToReset.remove();
-    // console.log(liToReset);
-    // console.log(event.currentTarget);
-    for(let i = 0; i < favouriteData.length; i++) 
-});
-}
 
 //Funcion pintar favoritos
 function renderFavourites() {
