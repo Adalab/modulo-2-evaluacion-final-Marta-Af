@@ -41,7 +41,6 @@ function handleClickChromes(event) {
 
   // Opcionalmente se ha eliminado la clase hidden para que aparezca la seccion de favoritos al hacer click en un cromo
   sectionFavourite.classList.remove("hidden");
-  
 }
 // EVENTOS
 // Evento click en buscar
@@ -62,22 +61,22 @@ btnSearch.addEventListener("click", (event) => {
 // CÓDIGO CUANDO INICIA LA PÁGINA
 //Funcion pintar un cromo
 function renderOne(charters) {
-    if (charters.imageUrl === undefined) {
-      listCard.innerHTML += `
+  if (charters.imageUrl === undefined) {
+    listCard.innerHTML += `
         <li class="chrome js_oneChrome" data-id="${charters._id}">
           <img class="photo" src="https://via.placeholder.com/210x295/ffffff/555555/?text=Disney" alt="" />
           <h3>${charters.name}</h3>
         </li>
       `;
-    } else {
-      listCard.innerHTML += `
+  } else {
+    listCard.innerHTML += `
         <li class="chrome js_oneChrome" data-id="${charters._id}">
           <img class="photo" src="${charters.imageUrl}" alt="" />
           <h3>${charters.name}</h3>
         </li>
       `;
-    }
   }
+}
 
 //Funcion pintar todos los cromos
 function renderAll() {
@@ -91,41 +90,38 @@ function renderAll() {
   }
 }
 //Pintar un favorito
-function renderOneFavourite(favouriteData) {
-    liFavourites.innerHTML += `<li class="chrome js_oneChrome" data-id="${favouriteData._id}">
+function renderOneFavourite(favourite) {
+  liFavourites.innerHTML += `<li class="chrome js_oneChrome" data-id="${favourite._id}">
     <button class="btnStar js_btnReset">&times;</button>
-      <img class="photo" src="${favouriteData.imageUrl}" alt="" />
+      <img class="photo" src="${favourite.imageUrl}" alt="" />
       
-      <h3>${favouriteData.name}</h3>
+      <h3>${favourite.name}</h3>
     </li>`;
-  
-    const btnReset = document.querySelector('.js_btnReset');
-    console.log(btnReset);
- 
-    // Eliminar favorito
-    btnReset.addEventListener('click', (event) => {
-      const clickResetLi = favouriteData._id;
-      console.log(clickResetLi);
-  
-      const clickResetFavouriteIndex = favouriteData.findIndex(
-        (charter) => charter._id === parseInt(clickResetLi)
-        
-      );
-      console.log(clickResetFavouriteIndex);
-      
-  
-      // verifica si esta o no
-      if (clickResetFavouriteIndex !== -1) {
-        favouriteData.splice(clickResetFavouriteIndex, 1);
-  
-        // Vuelve a pintar los favoritos
-        renderFavourites();
-      }
-    });
-  }
-  
-  
 
+  const btnReset = document.querySelector(".js_btnReset");
+    console.log(btnReset);
+    console.log(JSON.stringify(favouriteData));
+    console.log(favouriteData);
+
+  // Eliminar favorito
+  btnReset.addEventListener("click", (event) => {
+    const clickResetLi = event.currentTarget;
+    console.log(clickResetLi);
+
+    const clickResetFavouriteIndex = favouriteData.findIndex(
+      (charter) => charter._id === parseInt(clickResetLi.dataset.id)
+    );
+    console.log(clickResetFavouriteIndex);
+
+    // Elimina el favorito
+      favouriteData.splice(clickResetFavouriteIndex, 1);
+      
+    // Vuelve a pintar los favoritos
+    renderFavourites();
+    favChrome.classList.remove("favourite");
+    
+  });
+}
 
 //Funcion pintar favoritos
 function renderFavourites() {
@@ -143,7 +139,7 @@ fetch("//api.disneyapi.dev/character")
     chartersList = data.data;
     renderAll();
 
-    // console.log(data.data);
+   console.log(data.data);
   });
 
 console.log(">> Ready :)");
