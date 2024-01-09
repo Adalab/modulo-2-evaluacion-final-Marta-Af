@@ -6,6 +6,7 @@ const listCard = document.querySelector(".js_listCard");
 const sectionFavourite = document.querySelector(".js_sectionFavourite");
 const chromesFavourites = document.querySelector(".js_chromesFavourites");
 const liFavourites = document.querySelector(".js_liFavourites");
+const resetAll = document.querySelector('.js_ResetAll');
 
 // VARIABLES DE DATOS
 let chartersList = []; //array inicial
@@ -34,12 +35,10 @@ function handleClickChromes(event) {
   } else {
     favouriteData.splice(favouriteIndex, 1);
   }
-  localStorage.setItem("favouriteData", JSON.stringify(favouriteData));
-  // pintar favoritos
-  renderFavourites();
   favChrome.classList.toggle("favourite");
-
-  // Opcionalmente se ha eliminado la clase hidden para que aparezca la seccion de favoritos al hacer click en un cromo
+  localStorage.setItem("favouriteData", JSON.stringify(favouriteData)); //guarda los datos
+  renderFavourites();
+// Opcionalmente se ha eliminado la clase hidden para que aparezca la seccion de favoritos al hacer click en un cromo
   sectionFavourite.classList.remove("hidden");
 }
 // EVENTOS
@@ -53,7 +52,7 @@ btnSearch.addEventListener("click", (event) => {
     .then((data) => {
       chartersList = data.data;
       listCard.innerHTML = "";
-      renderAll(); // Renderizar después de obtener los datos de la API
+      renderAll(); 
       console.log(chartersList);
     });
 });
@@ -101,41 +100,47 @@ function renderOneFavourite(favourite) {
   
 }
 
-
-//Funcion pintar favoritos
+// Pintar todos los favoritos
 function renderFavourites() {
   liFavourites.innerHTML = "";
 
   for (let i = 0; i < favouriteData.length; i++) {
     renderOneFavourite(favouriteData[i]);
   }
+
+//Eliminar favoritos
   const btnResets = document.querySelectorAll(".js_btnReset");
-  // console.log(btnReset);
-  // console.log(JSON.stringify(favouriteData));
-  // console.log(favouriteData);
 
-  btnResets.forEach((btnResets) => {})
-// Eliminar favorito
-btnResets.forEach((btnReset) => {
-  btnReset.addEventListener("click", (event) => {
-    const clickResetBtn = event.currentTarget;
-    const selectedId = clickResetBtn.dataset.id;
-    console.log(selectedId);
+  btnResets.forEach((btnReset) => {
+    btnReset.addEventListener("click", (event) => {
+      const clickResetBtn = event.currentTarget;
+      const selectedId = clickResetBtn.dataset.id;
+      console.log(selectedId);
 
-    const clickResetFavouriteIndex = favouriteData.findIndex(
-      (charter) => charter._id === parseInt(selectedId)
-    );
-    console.log(clickResetFavouriteIndex);
+      const clickResetFavouriteIndex = favouriteData.findIndex(
+        (charter) => charter._id === parseInt(selectedId)
+      );
+      console.log(clickResetFavouriteIndex);
 
-    // Elimina el favorito
-    favouriteData.splice(clickResetFavouriteIndex, 1);
+      
+      favouriteData.splice(clickResetFavouriteIndex, 1); // Elimina el favorito
+      renderFavourites();
+
+      
+      localStorage.setITem("favouriteData", JSON.stringify(favouriteData));
+      renderFavourites();
+    });
+  });
+
+  //Eliminar todos los favoritos
+  resetAll.addEventListener('click', (event) => {
     
-    // Vuelve a pintar los favoritos
+    favouriteData.splice(0, favouriteData.length);
+   
+    localStorage.removeItem("favouriteData"); //Borra los datos
     renderFavourites();
   });
-});
 }
-
 // Pintar los cromos
 fetch("//api.disneyapi.dev/character")
   .then((response) => response.json())
@@ -146,4 +151,8 @@ fetch("//api.disneyapi.dev/character")
    console.log(data.data);
   });
 
-console.log(">> Ready :)");
+  localStorage.getItem("favouriteData", JSON.stringify(favouriteData)); //Recupera los datos
+  if(favouriteData.length > 0){
+    sectionFavourite.classList.remove("hidden");
+    renderFavourites();
+  }
