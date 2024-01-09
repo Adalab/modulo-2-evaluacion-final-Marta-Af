@@ -92,36 +92,15 @@ function renderAll() {
 //Pintar un favorito
 function renderOneFavourite(favourite) {
   liFavourites.innerHTML += `<li class="chrome js_oneChrome" data-id="${favourite._id}">
-    <button class="btnStar js_btnReset">&times;</button>
+    <button class="btnStar js_btnReset" data-id="${favourite._id}">&times;</button>
       <img class="photo" src="${favourite.imageUrl}" alt="" />
       
       <h3>${favourite.name}</h3>
     </li>`;
 
-  const btnReset = document.querySelector(".js_btnReset");
-    console.log(btnReset);
-    console.log(JSON.stringify(favouriteData));
-    console.log(favouriteData);
-
-  // Eliminar favorito
-  btnReset.addEventListener("click", (event) => {
-    const clickResetLi = event.currentTarget;
-    console.log(clickResetLi);
-
-    const clickResetFavouriteIndex = favouriteData.findIndex(
-      (charter) => charter._id === parseInt(clickResetLi.dataset.id)
-    );
-    console.log(clickResetFavouriteIndex);
-
-    // Elimina el favorito
-      favouriteData.splice(clickResetFavouriteIndex, 1);
-      
-    // Vuelve a pintar los favoritos
-    renderFavourites();
-    favChrome.classList.remove("favourite");
-    
-  });
+  
 }
+
 
 //Funcion pintar favoritos
 function renderFavourites() {
@@ -130,6 +109,31 @@ function renderFavourites() {
   for (let i = 0; i < favouriteData.length; i++) {
     renderOneFavourite(favouriteData[i]);
   }
+  const btnResets = document.querySelectorAll(".js_btnReset");
+  // console.log(btnReset);
+  // console.log(JSON.stringify(favouriteData));
+  // console.log(favouriteData);
+
+  btnResets.forEach((btnResets) => {})
+// Eliminar favorito
+btnResets.forEach((btnReset) => {
+  btnReset.addEventListener("click", (event) => {
+    const clickResetBtn = event.currentTarget;
+    const selectedId = clickResetBtn.dataset.id;
+    console.log(selectedId);
+
+    const clickResetFavouriteIndex = favouriteData.findIndex(
+      (charter) => charter._id === parseInt(selectedId)
+    );
+    console.log(clickResetFavouriteIndex);
+
+    // Elimina el favorito
+    favouriteData.splice(clickResetFavouriteIndex, 1);
+    
+    // Vuelve a pintar los favoritos
+    renderFavourites();
+  });
+});
 }
 
 // Pintar los cromos
