@@ -35,30 +35,32 @@ function handleClickChromes(event) {
   } else {
     favouriteData.splice(favouriteIndex, 1);
   }
+
   favChrome.classList.toggle("favourite");
-  localStorage.setItem("favouriteData", JSON.stringify(favouriteData)); //guarda los datos
+  localStorage.setItem("favouriteData", JSON.stringify(favouriteData)); // Guarda los datos
   renderFavourites();
-// Opcionalmente se ha eliminado la clase hidden para que aparezca la seccion de favoritos al hacer click en un cromo
+  // Opcionalmente se ha eliminado la clase hidden para que aparezca la sección de favoritos al hacer clic en un cromo
   sectionFavourite.classList.remove("hidden");
 }
+
 // EVENTOS
 // Evento click en buscar
 btnSearch.addEventListener("click", (event) => {
   event.preventDefault();
-  // traer el value del form
+  // Traer el valor del formulario
   const formValue = form.querySelector("input").value;
   fetch(`//api.disneyapi.dev/character?name=${formValue}`)
     .then((response) => response.json())
     .then((data) => {
       chartersList = data.data;
       listCard.innerHTML = "";
-      renderAll(); 
+      renderAll();
       console.log(chartersList);
     });
 });
 
 // CÓDIGO CUANDO INICIA LA PÁGINA
-//Funcion pintar un cromo
+// Función para pintar un cromo
 function renderOne(charters) {
   if (charters.imageUrl === undefined) {
     listCard.innerHTML += `
@@ -77,7 +79,7 @@ function renderOne(charters) {
   }
 }
 
-//Funcion pintar todos los cromos
+// Función para pintar todos los cromos
 function renderAll() {
   for (let i = 0; i < chartersList.length; i++) {
     renderOne(chartersList[i]);
@@ -88,19 +90,17 @@ function renderAll() {
     chrome.addEventListener("click", handleClickChromes);
   }
 }
-//Pintar un favorito
+
+// Función para pintar un favorito
 function renderOneFavourite(favourite) {
   liFavourites.innerHTML += `<li class="chrome js_oneChrome" data-id="${favourite._id}">
     <button class="btnStar js_btnReset" data-id="${favourite._id}">&times;</button>
       <img class="photo" src="${favourite.imageUrl}" alt="" />
-      
       <h3>${favourite.name}</h3>
     </li>`;
-
-  
 }
 
-// Pintar todos los favoritos
+// Función para pintar todos los favoritos
 function renderFavourites() {
   liFavourites.innerHTML = "";
 
@@ -108,7 +108,7 @@ function renderFavourites() {
     renderOneFavourite(favouriteData[i]);
   }
 
-//Eliminar favoritos
+  // Eliminar favoritos
   const btnResets = document.querySelectorAll(".js_btnReset");
 
   btnResets.forEach((btnReset) => {
@@ -122,37 +122,39 @@ function renderFavourites() {
       );
       console.log(clickResetFavouriteIndex);
 
-      
       favouriteData.splice(clickResetFavouriteIndex, 1); // Elimina el favorito
       renderFavourites();
 
-      
-      localStorage.setITem("favouriteData", JSON.stringify(favouriteData));
+      // Guarda datos actualizados en localStorage
+      localStorage.setItem("favouriteData", JSON.stringify(favouriteData));
       renderFavourites();
     });
   });
 
-  //Eliminar todos los favoritos
+  // Eliminar todos los favoritos
   resetAll.addEventListener('click', (event) => {
-    
     favouriteData.splice(0, favouriteData.length);
-   
-    localStorage.removeItem("favouriteData"); //Borra los datos
+    
+    localStorage.removeItem("favouriteData"); // Borra los datos 
     renderFavourites();
   });
 }
+
 // Pintar los cromos
 fetch("//api.disneyapi.dev/character")
   .then((response) => response.json())
   .then((data) => {
     chartersList = data.data;
     renderAll();
-
-   console.log(data.data);
+  ;
   });
 
-  localStorage.getItem("favouriteData", JSON.stringify(favouriteData)); //Recupera los datos
-  if(favouriteData.length > 0){
-    sectionFavourite.classList.remove("hidden");
-    renderFavourites();
-  }
+// Recupera datos del localStorage
+const storedFavouriteData = localStorage.getItem("favouriteData");
+if (storedFavouriteData) {
+  // Si hay datos en el localStorage, actualiza la variable favouriteData
+  favouriteData = JSON.parse(storedFavouriteData);
+  // Muestra la sección de favoritos y renderiza los favoritos
+  sectionFavourite.classList.remove("hidden");
+  renderFavourites();
+}
