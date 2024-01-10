@@ -1,74 +1,15 @@
-.container {
-  background-color: aqua;
-  width: 80vw;
-  height: 15vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.page__header {
-  height: 10vh;
+.header {
+  height: 40vh;
+  width: 100vw;
+  background-image: url(../images/image-disney.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-}
-
-input {
-  width: 30rem;
-  height: 2rem;
-}
-.btn {
-  width: 5rem;
-  height: 2.3rem;
-}
-.list_all {
-  display: grid;
-  grid-template-columns: 2fr 2fr;
-}
-
-.card {
-  display: grid;
-  grid-template-columns: 3fr 3fr 3fr 3fr;
-  place-items: center;
-  gap: 1rem;
-  .chrome {
-    background-color: beige;
-    height: 70vh;
-    width: 20vw;
-  }
-  .favourite {
-    background-color: red;
-  }
-}
-.container_fav {
-  width: 20vw;
-}
-.container_all {
-  width: 80vw;
-}
-.ul-favourite {
-  display: grid;
-  grid-template-columns: 2fr;
-  width: 20vw;
-}
-
-.hidden {
-  display: none;
-}
-
-.photo {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 10rem;
-  width: 12rem;
-}
-.btnStar {
-  padding: 5px 10px;
-  background-color: #e90f0f;
-  border: 1px solid #fdfcfc;
-  cursor: pointer;
-  font-size: 20px;
-  color: rgb(255, 255, 255);
-  font-weight: bold;
+  text-align: center;
+  &__title {
+    color: #fdfcfc;
+  }
 }

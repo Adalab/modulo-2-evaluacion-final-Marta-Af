@@ -1,0 +1,133 @@
+.main {
+  position: relative;
+  background-color: $fond;
+  margin: 2rem;
+  &__container {
+    background-color: $light-sky-blue;
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 0 5rem 0 5rem;
+    margin: auto;
+    &__input {
+      border: 3px solid $marian-blue;
+      border-color: $marian-blue;
+      width: 45rem;
+      height: 2rem;
+      background-color: $fond;
+      cursor: pointer;
+      &__btnsearch {
+        background-color: $marian-blue;
+        color: #fff;
+        border: 1px solid $marian-blue;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        height: 2.5rem;
+      }
+    }
+  }
+  &__list_all {
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    &__container_fav {
+      background-color: $non-photo-blue-2;
+      width: 20vw;
+      height: 100%;
+
+      &__btnReset {
+        background-color: $marian-blue;
+        color: #fff;
+        border: 1px solid $marian-blue;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        height: 2.5rem;
+        width: 15rem;
+        display: flex;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 3fr 3fr 3fr 3fr;
+  place-items: center;
+  gap: 1rem;
+  .chrome {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-content: center;
+    text-align: center;
+    background-color: beige;
+    height: 15rem;
+    width: 20vw;
+  }
+  .photo {
+    padding-top: 1rem;
+    padding-left: 2rem;
+    width: 100%;
+    height: 10rem;
+    width: 12rem;
+  }
+
+  .favourite {
+    background-color: $fairy-tale;
+  }
+}
+.container_fav {
+  h2 {
+    color: $color-secondary;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+  h3 {
+    color: $blue-green;
+    text-align: center;
+  }
+}
+
+.container_all {
+  width: 80vw;
+  background-color: $non-photo-blue;
+  h2 {
+    color: $federal-blue;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+  h3 {
+    color: $blue-green;
+    text-align: center;
+  }
+}
+.ul-favourite {
+  display: grid;
+  grid-template-columns: 2fr;
+  width: 20vw;
+}
+
+.hidden {
+  display: none;
+}
+
+.btnStar {
+  background-color: $marian-blue;
+  width: 12rem;
+  cursor: pointer;
+  font-size: 20px;
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  border: 1px solid $marian-blue;
+  border-radius: 5px;
+  text-align: center;
+}

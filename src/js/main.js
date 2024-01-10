@@ -66,14 +66,14 @@ function renderOne(charters) {
     listCard.innerHTML += `
         <li class="chrome js_oneChrome" data-id="${charters._id}">
           <img class="photo" src="https://via.placeholder.com/210x295/ffffff/555555/?text=Disney" alt="" />
-          <h3>${charters.name}</h3>
+          <h3 class="name">${charters.name}</h3>
         </li>
       `;
   } else {
     listCard.innerHTML += `
         <li class="chrome js_oneChrome" data-id="${charters._id}">
           <img class="photo" src="${charters.imageUrl}" alt="" />
-          <h3>${charters.name}</h3>
+          <h3 class="name">${charters.name}</h3>
         </li>
       `;
   }
@@ -96,7 +96,7 @@ function renderOneFavourite(favourite) {
   liFavourites.innerHTML += `<li class="chrome js_oneChrome" data-id="${favourite._id}">
     <button class="btnStar js_btnReset" data-id="${favourite._id}">&times;</button>
       <img class="photo" src="${favourite.imageUrl}" alt="" />
-      <h3>${favourite.name}</h3>
+      <h3 class="name">${favourite.name}</h3>
     </li>`;
 }
 
