@@ -96,7 +96,7 @@ function renderOneFavourite(favourite) {
   liFavourites.innerHTML += `<li class="chrome js_oneChrome" data-id="${favourite._id}">
     <button class="btnStar js_btnReset" data-id="${favourite._id}">&times;</button>
       <img class="photo" src="${favourite.imageUrl}" alt="" />
-      <h3>${favourite.name}</h3>
+      <h3><a href="${favourite.sourceUrl}">${favourite.name}</a></h3>
     </li>`;
 }
 
